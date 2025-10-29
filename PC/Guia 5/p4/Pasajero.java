@@ -1,5 +1,15 @@
-package Programacion.PC.Guia 5.p4;
 
-public class Pasajero {
-    
+
+public class Pasajero  implements Runnable{
+    private Tren tren;
+    public Pasajero(Tren tren){
+        this.tren = tren;
+    }
+    @Override
+    public void run() {
+       tren.subirseAlTren();
+       tren.esperaBajada();
+       tren.bajarseDelTren();
+    }
+
 }
