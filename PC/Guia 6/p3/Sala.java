@@ -12,11 +12,15 @@ public class Sala {
     private int cantSillaRuedas;
     private boolean hayInvestigador;
     private int cantVisitantes;
+    private int limVisitantes;
+    private int limManteni;
     public Sala(){
         capacidad = 50;
         cantMantenimiento = 0;
         cantVisitantes = 0;
         hayInvestigador = false;
+        limVisitantes = 60;
+        limManteni = 10;
         lock = new ReentrantLock(true);
         visitantes = lock.newCondition();
         investigadores = lock.newCondition();
@@ -28,7 +32,7 @@ public class Sala {
     public void entrarVisitante(){
         lock.lock();
         try {
-            while (cantVisitantes>=capacidad || cantMantenimiento>0 || hayInvestigador) {
+            while (cantVisitantes>=capacidad || cantMantenimiento>0 || hayInvestigador ) {
                 visitantes.await();
             }
             cantVisitantes++;
