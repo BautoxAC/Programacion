@@ -2,11 +2,11 @@ package p5;
 
 public class Main {
     public static void main(String[] args) {
-        Torre torre = new Torre();
-        Avion[] aviones = new Avion[30];
+        Torre2 torre = new Torre2();
+        Avion2[] aviones = new Avion2[30];
         Thread[] hAviones = new Thread[30];
         for (int i = 0; i < hAviones.length; i++) {
-            aviones[i] = new Avion(torre);
+            aviones[i] = new Avion2(torre);
             hAviones[i] = new Thread(aviones[i]);
         }
         for (int i = 0; i < hAviones.length; i++) {
