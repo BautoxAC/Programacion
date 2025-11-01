@@ -83,6 +83,7 @@ public class Cuerda {
         if (esperandDer == 0 && esperandIzq == 0) {
             lado = 'N';
             pasaronRonda = 0;
+            vanApasar = 0;
         }
 
         if (esperandIzq > 0 && (esperandDer == 0 || pasaronRonda == vanApasar)) {
