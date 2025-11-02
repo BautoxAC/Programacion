@@ -16,31 +16,24 @@ public class Ferry {
         esperandoAutos = 0;
         esperandoPersonas = 0;
     }
-    public synchronized void contarsePersona(){
+
+    public synchronized void contarsePersona() {
         esperandoPersonas++;
     }
-    public synchronized void contarseAuto(){
+
+    public synchronized void contarseAuto() {
         esperandoAutos++;
     }
+
     public synchronized void subirsePersona() {
         try {
-            
+
             while (subidosTotal >= capacidad || arrancaFerry || finalizoFerry) {
                 wait();
             }
-            
             esperandoPersonas--;
             subidosTotal++;
-            if (subidosTotal == 50) {
-                arrancaFerry = true;
-                notifyAll();
-            }
-            if (esperandoPersonas == 0 && esperandoAutos == 0 && subidosTotal < capacidad) {
-                arrancaFerry = true;
-                notifyAll();
-            }
             System.out.println("Subidos total persona " + subidosTotal);
-
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -48,28 +41,22 @@ public class Ferry {
 
     public synchronized void subirseAuto() {
         try {
-            
             while (subidosTotal >= capacidad - 2 || arrancaFerry || finalizoFerry) {
                 wait();
             }
-            
             esperandoAutos--;
             subidosTotal += 3;
-            if (subidosTotal == 50) {
-                arrancaFerry = true;
-                notifyAll();
-            }
-            if ((subidosTotal == 48 || subidosTotal == 49) && esperandoPersonas == 0) {
-                arrancaFerry = true;
-                notifyAll();
-            }
-            if (esperandoPersonas == 0 && esperandoAutos == 0 && subidosTotal < capacidad) {
-                arrancaFerry = true;
-                notifyAll();
-            }
             System.out.println("Subidos total auto " + subidosTotal);
         } catch (Exception e) {
             // TODO: handle exception
+        }
+    }
+
+    public synchronized void revisarSalida() {
+        if (subidosTotal == 50 || ((subidosTotal == 48 || subidosTotal == 49) && esperandoPersonas == 0)
+                || (esperandoPersonas == 0 && esperandoAutos == 0)) {
+            arrancaFerry = true;
+            notifyAll();
         }
     }
 

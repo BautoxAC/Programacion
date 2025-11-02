@@ -11,11 +11,11 @@ public class ControlFerry implements Runnable {
         while (true) {
             ferry.esperaFerryArranque();
             System.out.println("Arranca el recorrido del ferry");
-            try {
+            /* try {
                 Thread.sleep(5000);
             } catch (Exception e) {
                 // TODO: handle exception
-            }
+            } */
             System.out.println("Finaliza el recorrido");
             ferry.terminoElRecorrido();
         }
