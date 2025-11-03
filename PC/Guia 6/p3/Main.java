@@ -2,12 +2,12 @@ public class Main {
     public static void main(String[] args) {
 
         Sala sala = new Sala();
-        Thread[] hilosVisitante = new Thread[70];
-        Visitante[] visitantes = new Visitante[70];
-        Thread[] hilosSillaruedas = new Thread[10];
-        SillaRuedas[] sillaRuedas = new SillaRuedas[10];
-        Thread[] hilosMante = new Thread[20];
-        Mantenimiento[] mante = new Mantenimiento[20];
+       /*  Thread[] hilosVisitante = new Thread[10];
+        Visitante[] visitantes = new Visitante[10];
+        Thread[] hilosSillaruedas = new Thread[3];
+        SillaRuedas[] sillaRuedas = new SillaRuedas[3];
+        Thread[] hilosMante = new Thread[4];
+        Mantenimiento[] mante = new Mantenimiento[4];
 
         for (int i = 0; i < visitantes.length; i++) {
             visitantes[i] = new Visitante(sala);
@@ -31,7 +31,7 @@ public class Main {
         }
         for (int i = 0; i < hilosMante.length; i++) {
             hilosMante[i].start();
-        }
+        } */
 
         Thread[] hilosInve = new Thread[5];
         Investigador[] inves = new Investigador[5];

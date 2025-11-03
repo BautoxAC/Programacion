@@ -25,12 +25,12 @@ public class Sala {
     private int esperaMantenimiento;
 
     public Sala() {
-        capacidad = 50;
+        capacidad = 8;
         cantMantenimiento = 0;
         cantVisitantes = 0;
         hayInvestigador = false;
-        limVisitantes = 30;
-        limManteni = 10;
+        limVisitantes = 3;
+        limManteni = 1;
         limVisitantesCont = 0;
         limManteniCont = 0;
         esperaVisitantes = 0;
@@ -70,7 +70,7 @@ public class Sala {
             esperaVisitantes++;
             limVisitantes++;
             cantSillaRuedas++;
-            capacidad = 30;
+            capacidad = 4;
             cantVisitantes++;
             lock.unlock();
         } catch (Exception e) {
@@ -142,7 +142,7 @@ public class Sala {
             cantVisitantes--;
             cantSillaRuedas--;
             if (cantSillaRuedas == 0) {
-                capacidad = 50;
+                capacidad = 8;
                 visitantes.signalAll();
             }
             if (cantVisitantes == 0) {
@@ -172,12 +172,12 @@ public class Sala {
 
             cantMantenimiento--;
             if (cantMantenimiento == 0) {
-                if (esperaInvestigadores > 0) {
-                    investigadores.signal();
-                    limManteniCont = 0;
-                }
                 if (esperaVisitantes > 0) {
                     visitantes.signalAll();
+                    limManteniCont = 0;
+                }
+                if (esperaInvestigadores > 0) {
+                    investigadores.signal();
                     limManteniCont = 0;
                 }
                 if (esperaVisitantes == 0 && esperaInvestigadores == 0 && esperaMantenimiento > 0) {
@@ -197,13 +197,14 @@ public class Sala {
         try {
 
             hayInvestigador = false;
-            if (esperaMantenimiento > 0) {
-                mantenimiento.signalAll();
-            }
             if (esperaVisitantes > 0) {
                 visitantes.signalAll();
             }
-            if (esperaVisitantes == 0 && esperaInvestigadores == 0 && esperaInvestigadores > 0) {
+            if (esperaMantenimiento > 0) {
+                mantenimiento.signalAll();
+            }
+            System.out.println(esperaInvestigadores);
+            if (esperaVisitantes == 0 && esperaMantenimiento == 0 && esperaInvestigadores > 0) {
                 investigadores.signal();
             }
             lock.unlock();

@@ -8,7 +8,7 @@ public class Investigador implements Runnable {
     @Override
     public void run() {
         sala.entrarInvestigador();
-        System.out.println(" Entro investigador");
+        System.out.println(" Entro investigador-------------------------------");
 
         try {
             Thread.sleep(4000);
