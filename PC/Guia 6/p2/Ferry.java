@@ -54,9 +54,21 @@ public class Ferry {
 
     public synchronized void revisarSalida() {
         if (subidosTotal == 50 || ((subidosTotal == 48 || subidosTotal == 49) && esperandoPersonas == 0)
-                || (esperandoPersonas == 0 && esperandoAutos == 0)) {
+        /* || (esperandoPersonas == 0 && esperandoAutos == 0) */) {
             arrancaFerry = true;
             notifyAll();
+        }
+    }
+
+    public synchronized void arrancaFerryDespues(int tiempo) {
+        try {
+            do {
+
+                wait(tiempo);
+            } while (subidosTotal == 0 && !arrancaFerry);
+            arrancaFerry = true;
+        } catch (Exception e) {
+            // TODO: handle exception
         }
     }
 

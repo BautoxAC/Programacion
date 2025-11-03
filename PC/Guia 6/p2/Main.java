@@ -21,5 +21,16 @@ public class Main {
             hilosPersonas[i].start();
         }
         hiloFerry.start();
+
+
+
+        try {
+            Thread.sleep(20000);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        Persona p = new Persona(ferry);
+        Thread t = new Thread(p);
+        t.start();
     }
 }

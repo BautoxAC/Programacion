@@ -13,6 +13,7 @@ public class SillaRuedas implements Runnable{
         } catch (Exception e) {
             // TODO: handle exception
         }
+         System.out.println("Sale Silla de ruedas");
         sala.salirSalirSillaRuedas();
     }
 }

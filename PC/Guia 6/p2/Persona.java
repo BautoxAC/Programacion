@@ -7,11 +7,6 @@ public class Persona  implements Runnable{
     }
     public void run(){
         ferry.contarsePersona();
-        /* try {
-            Thread.sleep(1);
-        } catch (Exception e) {
-            // TODO: handle exception
-        } */
         ferry.subirsePersona();
         ferry.revisarSalida();
         ferry.bajarseFerryPersona();

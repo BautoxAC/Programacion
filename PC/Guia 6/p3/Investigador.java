@@ -15,6 +15,7 @@ public class Investigador implements Runnable {
         } catch (Exception e) {
             // TODO: handle exception
         }
+        System.out.println("Sale investigador");
         sala.salirInvestigador();
     }
 

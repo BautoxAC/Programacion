@@ -7,11 +7,13 @@ public class Visitante implements Runnable {
     @Override
     public void run() {
         sala.entrarVisitante();
+        System.out.println("Entro visitante");
         try {
             Thread.sleep(4000);
         } catch (Exception e) {
             // TODO: handle exception
         }
+        System.out.println("Sale visitante");
         sala.salirVisitante();
     }
 }

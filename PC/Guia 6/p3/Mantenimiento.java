@@ -15,6 +15,7 @@ public class Mantenimiento implements Runnable {
         } catch (Exception e) {
             // TODO: handle exception
         }
+        System.out.println("Sale Mantenimiento");
         sala.salirMantenimiento();
     }
 
