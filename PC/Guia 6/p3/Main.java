@@ -2,7 +2,7 @@ public class Main {
     public static void main(String[] args) {
 
         Sala sala = new Sala();
-       /*  Thread[] hilosVisitante = new Thread[10];
+        Thread[] hilosVisitante = new Thread[10];
         Visitante[] visitantes = new Visitante[10];
         Thread[] hilosSillaruedas = new Thread[3];
         SillaRuedas[] sillaRuedas = new SillaRuedas[3];
@@ -31,7 +31,7 @@ public class Main {
         }
         for (int i = 0; i < hilosMante.length; i++) {
             hilosMante[i].start();
-        } */
+        } 
 
         Thread[] hilosInve = new Thread[5];
         Investigador[] inves = new Investigador[5];

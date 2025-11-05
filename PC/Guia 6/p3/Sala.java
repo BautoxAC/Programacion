@@ -121,7 +121,7 @@ public class Sala {
                     limVisitantesCont = 0;
                 }
                 if (esperaMantenimiento > 0) {
-                    mantenimiento.signal();
+                    mantenimiento.signalAll();
                     limVisitantesCont = 0;
                 }
                 if (esperaMantenimiento == 0 && esperaInvestigadores == 0 && esperaVisitantes > 0) {
@@ -151,7 +151,7 @@ public class Sala {
                     limVisitantesCont = 0;
                 }
                 if (esperaMantenimiento > 0) {
-                    mantenimiento.signal();
+                    mantenimiento.signalAll();
                     limVisitantesCont = 0;
                 }
                 if (esperaMantenimiento == 0 && esperaInvestigadores == 0 && esperaVisitantes > 0) {
@@ -197,11 +197,11 @@ public class Sala {
         try {
 
             hayInvestigador = false;
-            if (esperaVisitantes > 0) {
-                visitantes.signalAll();
-            }
             if (esperaMantenimiento > 0) {
                 mantenimiento.signalAll();
+            }
+            if (esperaVisitantes > 0) {
+                visitantes.signalAll();
             }
             System.out.println(esperaInvestigadores);
             if (esperaVisitantes == 0 && esperaMantenimiento == 0 && esperaInvestigadores > 0) {
