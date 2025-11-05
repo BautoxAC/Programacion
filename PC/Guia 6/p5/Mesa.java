@@ -1,9 +1,76 @@
 public class Mesa {
     private int cajaCapacidad;
-    public Mesa(){
-        cajaCapacidad = 40;
+    private int intentaronPonerYEsperan;
+    private int pesoTotalPasteles;
+    private int totalEmpaquetadores;
+    private boolean cambiarCaja;
+
+    public Mesa(int totalEmpaquetadores) {
+        cajaCapacidad = 2;
+        intentaronPonerYEsperan = 0;
+        pesoTotalPasteles = 0;
+        cambiarCaja = false;
+        this.totalEmpaquetadores = totalEmpaquetadores;
     }
-    public synchronized SoltarPastel(int peso){
-        
+
+    public synchronized void soltarPastel(int peso) {
+        try {
+            /*
+             * intentaronPonerYEsperan++;
+             * while ((pesoTotalPasteles + peso) > cajaCapacidad && totalEmpaquetadores >
+             * intentaronPonerYEsperan) {
+             * wait();
+             * }
+             * if (totalEmpaquetadores == intentaronPonerYEsperan) {
+             * cambiarCaja = true;
+             * intentaronPonerYEsperan = 0;
+             * notifyAll();
+             * while (cambiarCaja) {
+             * wait();
+             * }
+             * soltarPastel(peso);
+             * } else if ((pesoTotalPasteles + peso) < cajaCapacidad) {
+             * pesoTotalPasteles += peso;
+             * intentaronPonerYEsperan--;
+             * if (pesoTotalPasteles + peso == cajaCapacidad) {
+             * cambiarCaja =true;
+             * notifyAll();
+             * }
+             * }
+             */
+            while (cambiarCaja) {
+                wait();
+            }
+            pesoTotalPasteles += peso;
+            if (pesoTotalPasteles >= cajaCapacidad) {
+                cambiarCaja = true;
+                
+                notifyAll();
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+    }
+
+    public synchronized void retirarCaja() {
+        try {
+            while (!cambiarCaja) {
+                wait();
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
+    public synchronized void reponerCaja() {
+        try {
+            cambiarCaja = false;
+            pesoTotalPasteles = 0;
+            notifyAll();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 }
