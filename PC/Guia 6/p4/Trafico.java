@@ -1,3 +1,5 @@
+import dinamicas.Cola;
+
 public class Trafico {
     private int esperandoNorte;
     private int esperandoSur;
@@ -5,9 +7,11 @@ public class Trafico {
     private int puedenPasar;
     private int pasaronRondaSur;
     private char turno;
+    private Cola cola;
     private int pasaronRondaNorte;
 
     public Trafico() {
+        cola = new Cola();
         esperandoNorte = 0;
         turno = 'T';
         esperandoSur = 0;
@@ -17,13 +21,15 @@ public class Trafico {
         pasaronRondaSur = 0;
     }
 
-    public synchronized void entrarCocheDelNorte() {
+    public synchronized void entrarCocheDelNorte(String nombre) {
         try {
             esperandoNorte++;
 
             while (turno == 'S' || pasando >= puedenPasar || pasaronRondaNorte >= 10) {
                 wait();
             }
+            System.out.println(nombre);
+            cola.poner(nombre);
             if (turno == 'T') {
                 turno = 'N';
             }
@@ -35,7 +41,18 @@ public class Trafico {
         }
     }
 
-    public synchronized void salirCocheDelNorte() {
+    public synchronized void salirCocheDelNorte(String nombre) {
+        try {
+
+            while (!cola.obtenerFrente().equals(nombre)) {
+                wait();
+            }
+            System.out.println(nombre);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        cola.sacar();
         pasaronRondaNorte++;
         pasando--;
         if (pasaronRondaNorte >= 10) {
@@ -56,7 +73,7 @@ public class Trafico {
         notifyAll();
     }
 
-    public synchronized void entrarCocheDelSur() {
+    public synchronized void entrarCocheDelSur(String nombre) {
         try {
             esperandoSur++;
 
@@ -66,6 +83,9 @@ public class Trafico {
             if (turno == 'T') {
                 turno = 'S';
             }
+            System.out.println(nombre);
+            cola.poner(nombre);
+
             pasando++;
             esperandoSur--;
 
@@ -74,7 +94,16 @@ public class Trafico {
         }
     }
 
-    public synchronized void salirCocheDelSur() {
+    public synchronized void salirCocheDelSur(String nombre) {
+        try {
+            while (!cola.obtenerFrente().equals(nombre)) {
+                wait();
+            }
+            System.out.println(nombre);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        cola.sacar();
         pasaronRondaSur++;
         pasando--;
         if (pasaronRondaSur >= 10) {
