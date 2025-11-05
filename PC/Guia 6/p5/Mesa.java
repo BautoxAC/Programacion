@@ -38,15 +38,17 @@ public class Mesa {
              * }
              * }
              */
-            while (cambiarCaja) {
+            intentaronPonerYEsperan++;
+            while (peso + pesoTotalPasteles > cajaCapacidad || cambiarCaja) {
+                if (intentaronPonerYEsperan == totalEmpaquetadores) {
+                    cambiarCaja = true;
+                    notifyAll();
+                }
                 wait();
             }
-            pesoTotalPasteles += peso;
-            if (pesoTotalPasteles >= cajaCapacidad) {
-                cambiarCaja = true;
-                
-                notifyAll();
-            }
+            pesoTotalPasteles+=peso;
+            intentaronPonerYEsperan--;
+            notifyAll();
         } catch (Exception e) {
             // TODO: handle exception
         }
