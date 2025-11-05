@@ -1,19 +1,18 @@
 public class Mostrador {
-    private int[] pasteles;
+    private Cola pasteles;
     private int contador;
 
     public Mostrador() {
-        pasteles = new int[20];
+        
+        pasteles = new Cola();
         contador = 0;
     }
 
     public synchronized void crearPastel(int peso) {
         try {
-            while (contador == pasteles.length) {
+            while (!pasteles.poner(peso)) {
                 wait();
             }
-            contador++;
-            pasteles[pasteles.length-contador] = peso;
             notify();
         } catch (Exception e) {
             // TODO: handle exception
@@ -26,8 +25,8 @@ public class Mostrador {
             while (contador == 0) {
                 wait();
             }
-            peso = pasteles[contador];
-            contador--;
+            peso = (int)pasteles.obtenerFrente();
+            pasteles.sacar();
             notify();
         } catch (Exception e) {
             // TODO: handle exception
