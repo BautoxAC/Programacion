@@ -6,7 +6,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Almacen {
     private int capacidadParaSalir;
     private int cajasTotal;
-    private int cajaSinFermentar;
     private ReentrantLock lock;
     private Condition camion;
 
@@ -20,10 +19,10 @@ public class Almacen {
     public void sacarCajas() {
         lock.lock();
         try {
-            while (cajasTotal<capacidadParaSalir) {
+            while (cajasTotal < capacidadParaSalir) {
                 camion.await();
             }
-            cajasTotal-=100;
+            cajasTotal -= 100;
         } catch (Exception e) {
             // TODO: handle exception
         } finally {
@@ -34,9 +33,13 @@ public class Almacen {
     public void ponerCaja(char tipoCaja) {
         lock.lock();
         try {
-            if (tipoCaja!='N') {
-                cajasTotal+=10;
-                if (cajasTotal>=capacidadParaSalir) {
+            if (tipoCaja != 'N') {
+                if (tipoCaja == 'D') {
+                    cajasTotal += 20;
+                } else {
+                    cajasTotal += 10;
+                }
+                if (cajasTotal >= capacidadParaSalir) {
                     camion.signal();
                 }
             }

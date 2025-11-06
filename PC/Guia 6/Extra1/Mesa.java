@@ -29,7 +29,7 @@ public class Mesa {
     }
 
     public void ponerBotellaVino() {
-        
+
         lock.lock();
         try {
             while (totalEnCajaVino >= capacidadCaja) {
@@ -48,7 +48,7 @@ public class Mesa {
         }
     }
 
-    public  void ponerBotellaSaborisada() {
+    public void ponerBotellaSaborisada() {
         lock.lock();
         try {
             while (totalEnCajaSaborizada >= capacidadCaja) {
@@ -82,24 +82,33 @@ public class Mesa {
 
     public char cambiarCaja() {
         lock.lock();
-        char tipoCaja= 'N';
+        char tipoCaja = 'N';
         try {
+            if (cambiandoCajaSaborizada && cambiandoCajaVino) {
+                tipoCaja = 'D';
+
+            } else {
+                if (cambiandoCajaSaborizada) {
+                    tipoCaja = 'S';
+                }
+                if (cambiandoCajaVino) {
+                    tipoCaja = 'V';
+                }
+            }
             if (cambiandoCajaSaborizada) {
                 cambiandoCajaSaborizada = false;
                 totalEnCajaSaborizada = 0;
                 embotelladorSaborizada.signalAll();
-                tipoCaja = 'S';
             }
             if (cambiandoCajaVino) {
                 cambiandoCajaVino = false;
                 totalEnCajaVino = 0;
                 embotelladorVino.signalAll();
-                tipoCaja = 'V';
             }
-            if (tipoCaja=='V' && cajaFermentando==0) {
+            if (tipoCaja == 'V' && cajaFermentando == 0) {
                 cajaFermentando++;
                 tipoCaja = 'N';
-            }else{
+            } else {
                 cajaFermentando--;
                 cajaFermentando++;
             }
