@@ -1,6 +1,6 @@
 package Extra1;
 
-public class Embotellador implements Runnable{
+public class Embotellador implements Runnable {
     private Mesa mesa;
     private char tipoBotella;
 
@@ -11,27 +11,30 @@ public class Embotellador implements Runnable{
 
     @Override
     public void run() {
-        switch (tipoBotella) {
-            case 'V':
-            mesa.ponerBotellaVino();
-            System.out.println("Botella de vino puesta");
-            try {
-                Thread.sleep(3000);
-            } catch (Exception e) {
-                // TODO: handle exception
+        while (true) {
+            switch (tipoBotella) {
+                case 'V':
+                    mesa.ponerBotellaVino();
+                    System.out.println("Botella de vino puesta");
+                    try {
+                        Thread.sleep(3000);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                    break;
+                case 'S':
+                    mesa.ponerBotellaSaborisada();
+                    System.out.println("Botella de agua saborisada puesta");
+                    try {
+                        Thread.sleep(3000);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                    break;
+                default:
+                    break;
             }
-            break;
-            case 'S':
-            mesa.ponerBotellaSaborisada();
-            System.out.println("Botella de agua saborisada puesta");
-                try {
-                    Thread.sleep(3000);
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-                break;
-            default:
-                break;
         }
+
     }
 }

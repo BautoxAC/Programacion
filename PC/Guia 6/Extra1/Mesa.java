@@ -28,7 +28,8 @@ public class Mesa {
         empaquetador = lock.newCondition();
     }
 
-    public synchronized void ponerBotellaVino() {
+    public void ponerBotellaVino() {
+        
         lock.lock();
         try {
             while (totalEnCajaVino >= capacidadCaja) {
@@ -47,7 +48,7 @@ public class Mesa {
         }
     }
 
-    public synchronized void ponerBotellaSaborisada() {
+    public  void ponerBotellaSaborisada() {
         lock.lock();
         try {
             while (totalEnCajaSaborizada >= capacidadCaja) {
@@ -66,25 +67,20 @@ public class Mesa {
         }
     }
 
-    public synchronized void esperaSacarCaja() {
+    public void esperaSacarCaja() {
         lock.lock();
         try {
-            System.out.println("a");
             while (!cambiandoCajaSaborizada && !cambiandoCajaVino) {
-                System.out.println("a1");
                 empaquetador.await();
-                System.out.println("a2");
             }
-            
         } catch (Exception e) {
             // TODO: handle exception
         } finally {
-            System.out.println("a");
             lock.unlock();
         }
     }
 
-    public synchronized char cambiarCaja() {
+    public char cambiarCaja() {
         lock.lock();
         char tipoCaja= 'N';
         try {

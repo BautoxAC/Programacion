@@ -12,7 +12,7 @@ public class Camion implements Runnable{
         while (true) {
             almacen.sacarCajas();
 
-            System.out.println("Saliendo camion");
+            System.out.println("Saliendo camion---------------------------");
             try {
                 Thread.sleep(3000);
                 
