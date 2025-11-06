@@ -15,29 +15,7 @@ public class Mesa {
 
     public synchronized void soltarPastel(int peso) {
         try {
-            /*
-             * intentaronPonerYEsperan++;
-             * while ((pesoTotalPasteles + peso) > cajaCapacidad && totalEmpaquetadores >
-             * intentaronPonerYEsperan) {
-             * wait();
-             * }
-             * if (totalEmpaquetadores == intentaronPonerYEsperan) {
-             * cambiarCaja = true;
-             * intentaronPonerYEsperan = 0;
-             * notifyAll();
-             * while (cambiarCaja) {
-             * wait();
-             * }
-             * soltarPastel(peso);
-             * } else if ((pesoTotalPasteles + peso) < cajaCapacidad) {
-             * pesoTotalPasteles += peso;
-             * intentaronPonerYEsperan--;
-             * if (pesoTotalPasteles + peso == cajaCapacidad) {
-             * cambiarCaja =true;
-             * notifyAll();
-             * }
-             * }
-             */
+            
             intentaronPonerYEsperan++;
             while (peso + pesoTotalPasteles > cajaCapacidad || cambiarCaja) {
                 if (intentaronPonerYEsperan == totalEmpaquetadores) {
