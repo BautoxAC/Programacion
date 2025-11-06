@@ -1,5 +1,6 @@
- package Extra1;
+package Extra1;
 
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Almacen {
@@ -7,17 +8,42 @@ public class Almacen {
     private int cajasTotal;
     private int cajaSinFermentar;
     private ReentrantLock lock;
-    private 
+    private Condition camion;
 
-    public Almacen(){
+    public Almacen() {
         cajasTotal = 0;
         capacidadParaSalir = 100;
-        cajaSinFermentar=0;
+        lock = new ReentrantLock();
+        camion = lock.newCondition();
     }
-    public synchronized void sacarCajas(){
 
+    public void sacarCajas() {
+        lock.lock();
+        try {
+            while (cajasTotal<capacidadParaSalir) {
+                camion.await();
+            }
+            cajasTotal-=100;
+        } catch (Exception e) {
+            // TODO: handle exception
+        } finally {
+            lock.unlock();
+        }
     }
-    public synchronized void ponerCaja(){
 
+    public void ponerCaja(char tipoCaja) {
+        lock.lock();
+        try {
+            if (tipoCaja!='N') {
+                cajasTotal+=10;
+                if (cajasTotal>=capacidadParaSalir) {
+                    camion.signal();
+                }
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        } finally {
+            lock.unlock();
+        }
     }
 }

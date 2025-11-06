@@ -7,6 +7,7 @@ public class Mesa {
     private int capacidadCaja;
     private int totalEnCajaVino;
     private int totalEnCajaSaborizada;
+    private int cajaFermentando;
     private boolean cambiandoCajaSaborizada;
     private boolean cambiandoCajaVino;
     private ReentrantLock lock;
@@ -20,6 +21,7 @@ public class Mesa {
         totalEnCajaVino = 0;
         cambiandoCajaSaborizada = false;
         cambiandoCajaVino = false;
+        cajaFermentando = 0;
         lock = new ReentrantLock();
         embotelladorSaborizada = lock.newCondition();
         embotelladorVino = lock.newCondition();
@@ -34,7 +36,7 @@ public class Mesa {
                     cambiandoCajaVino = true;
                     empaquetador.signal();
                 }
-                embotelladorSaborizada.await();
+                embotelladorVino.await();
             }
             totalEnCajaVino++;
 
@@ -67,13 +69,17 @@ public class Mesa {
     public synchronized void esperaSacarCaja() {
         lock.lock();
         try {
+            System.out.println("a");
             while (!cambiandoCajaSaborizada && !cambiandoCajaVino) {
+                System.out.println("a1");
                 empaquetador.await();
+                System.out.println("a2");
             }
-
+            
         } catch (Exception e) {
             // TODO: handle exception
         } finally {
+            System.out.println("a");
             lock.unlock();
         }
     }
@@ -89,12 +95,18 @@ public class Mesa {
                 tipoCaja = 'S';
             }
             if (cambiandoCajaVino) {
-                cambiandoCajaSaborizada = false;
-                totalEnCajaSaborizada = 0;
-                embotelladorSaborizada.signalAll();
+                cambiandoCajaVino = false;
+                totalEnCajaVino = 0;
+                embotelladorVino.signalAll();
                 tipoCaja = 'V';
             }
-            //Poner caja en almacen
+            if (tipoCaja=='V' && cajaFermentando==0) {
+                cajaFermentando++;
+                tipoCaja = 'N';
+            }else{
+                cajaFermentando--;
+                cajaFermentando++;
+            }
         } catch (Exception e) {
             // TODO: handle exception
         } finally {
