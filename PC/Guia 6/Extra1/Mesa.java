@@ -38,6 +38,7 @@ public class Mesa {
                     empaquetador.signal();
                 }
                 embotelladorVino.await();
+                
             }
             totalEnCajaVino++;
 
@@ -86,7 +87,6 @@ public class Mesa {
         try {
             if (cambiandoCajaSaborizada && cambiandoCajaVino) {
                 tipoCaja = 'D';
-
             } else {
                 if (cambiandoCajaSaborizada) {
                     tipoCaja = 'S';
