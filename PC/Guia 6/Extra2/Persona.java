@@ -26,6 +26,11 @@ public class Persona implements Runnable {
         System.out.println("Se termino la actividad");
         salon.seTerminoLaActidad();
         
+        try {
+            Thread.sleep(10000);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         
         System.out.println("Persona entrando a la actividad");
         salon.entrarActividad((actividadHizo + 1)%3);
