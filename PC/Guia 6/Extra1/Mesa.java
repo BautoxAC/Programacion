@@ -38,7 +38,7 @@ public class Mesa {
                     empaquetador.signal();
                 }
                 embotelladorVino.await();
-                
+
             }
             totalEnCajaVino++;
 
@@ -85,25 +85,31 @@ public class Mesa {
         lock.lock();
         char tipoCaja = 'N';
         try {
-            if (cambiandoCajaSaborizada && cambiandoCajaVino) {
-                tipoCaja = 'D';
-            } else {
-                if (cambiandoCajaSaborizada) {
-                    tipoCaja = 'S';
-                }
-                if (cambiandoCajaVino) {
-                    tipoCaja = 'V';
-                }
-            }
+            /*
+             * if (cambiandoCajaSaborizada && cambiandoCajaVino) {
+             * tipoCaja = 'D';
+             * } else {
+             * if (cambiandoCajaSaborizada) {
+             * tipoCaja = 'S';
+             * }
+             * if (cambiandoCajaVino) {
+             * tipoCaja = 'V';
+             * }
+             * }
+             */
             if (cambiandoCajaSaborizada) {
                 cambiandoCajaSaborizada = false;
                 totalEnCajaSaborizada = 0;
+                tipoCaja = 'S';
                 embotelladorSaborizada.signalAll();
-            }
-            if (cambiandoCajaVino) {
-                cambiandoCajaVino = false;
-                totalEnCajaVino = 0;
-                embotelladorVino.signalAll();
+            } else {
+                if (cambiandoCajaVino) {
+                    
+                    cambiandoCajaVino = false;
+                    totalEnCajaVino = 0;
+                    tipoCaja = 'V';
+                    embotelladorVino.signalAll();
+                }
             }
             if (tipoCaja == 'V' && cajaFermentando == 0) {
                 cajaFermentando++;

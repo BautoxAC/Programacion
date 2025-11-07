@@ -17,7 +17,7 @@ public class Embotellador implements Runnable {
                     mesa.ponerBotellaVino();
                     System.out.println("Botella de vino puesta");
                     try {
-                        Thread.sleep(4000);
+                        Thread.sleep(1000);
                     } catch (Exception e) {
                         // TODO: handle exception
                     }
@@ -26,7 +26,7 @@ public class Embotellador implements Runnable {
                     mesa.ponerBotellaSaborisada();
                     System.out.println("Botella de agua saborizada puesta");
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                     } catch (Exception e) {
                         // TODO: handle exception
                     }
