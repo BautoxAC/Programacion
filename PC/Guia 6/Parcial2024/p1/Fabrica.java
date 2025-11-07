@@ -93,7 +93,6 @@ public class Fabrica {
     }
     public void empezarProduccionAuto(){
         try {
-            System.out.println("as");
             ruedasListas.acquire(4);
             puertasListas.acquire(2);
             carroceriasListas.acquire(1);
