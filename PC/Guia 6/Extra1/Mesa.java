@@ -85,18 +85,6 @@ public class Mesa {
         lock.lock();
         char tipoCaja = 'N';
         try {
-            /*
-             * if (cambiandoCajaSaborizada && cambiandoCajaVino) {
-             * tipoCaja = 'D';
-             * } else {
-             * if (cambiandoCajaSaborizada) {
-             * tipoCaja = 'S';
-             * }
-             * if (cambiandoCajaVino) {
-             * tipoCaja = 'V';
-             * }
-             * }
-             */
             if (cambiandoCajaSaborizada) {
                 cambiandoCajaSaborizada = false;
                 totalEnCajaSaborizada = 0;
